@@ -127,13 +127,13 @@ for i=sd
         if p.means, scatter(p.axh, X(1), X(2), 100, p.color, "pentagram", 'filled','HandleVisibility','off'); end
         if(p.display==1)
             if(p.type=="fill")
-                plots{count} = fill(p.axh, bp(1,:), bp(2,:), p.color{count}, 'FaceAlpha', p.alpha(count),'DisplayName',p.name);
+                plots{count} = fill(p.axh, bp(1,:), bp(2,:), p.color{count}, 'EdgeColor', 'none', 'FaceAlpha', p.alpha(count),'DisplayName',p.name);
             elseif(p.type=="line")
                 plots{count} = plot(p.axh, bp(1,:), bp(2,:), 'LineStyle', p.ls, 'Color', p.color{count}, 'LineWidth',1, 'DisplayName',p.name);
             end
         else
             if(p.type=="fill")
-                plots{count} = fill(p.axh, bp(1,:), bp(2,:), p.color{count}, 'FaceAlpha', p.alpha(count),'HandleVisibility','off');
+                plots{count} = fill(p.axh, bp(1,:), bp(2,:), p.color{count}, 'EdgeColor', 'none', 'FaceAlpha', p.alpha(count),'HandleVisibility','off');
             elseif(p.type=="line")
                 plots{count} = plot(p.axh, bp(1,:), bp(2,:), 'LineStyle', p.ls, 'Color', p.color{count}, 'LineWidth',1, 'HandleVisibility','off');
             end
