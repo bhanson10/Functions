@@ -696,7 +696,6 @@ def AGI_Qmethod_J2000_rv_to_RotateBaryCenter_rv(rv_sec, rv_I, const):
              np.cross(np.cross(r_sec, v_sec), r_sec))
     dzhat = np.array([0, 0, 0])
     dQ_matrix = np.column_stack((dxhat, dyhat, dzhat)).T
-    
     Q = R_DCM_I
     R0 = ratio_u * r_sec
     V0 = ratio_u * v_sec
@@ -747,7 +746,6 @@ def geo_2_syn(JD, geo_RV, c):
                 syn_RV[j] = AGI_Qmethod_J2000_rv_to_RotateBaryCenter_rv(rv_sec, rv_I, c)
 
     return syn_RV
-
 ###########################################################################################################################################
 def AGI_Qmethod_Inverse_RotateBarycenter_rv_to_J2000_rv(rv_sec, RV_R_barycenter_unitless, const):
 

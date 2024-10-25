@@ -42,26 +42,26 @@ xest0 = rv.start + sqrt(Q)*randn(4,1); Pest0 = R;
                         'const', const, ...
                         'time', 'CT'); %$.../Utilities/Functions/MATLAB/Estimation/UKF
 
-figure(1)
-subplot(4,1,1)
-plot(tz,z(1,:),'LineWidth',1)
-xlabel("time (TU)")
-ylabel("x (LU)")
-subplot(4,1,2)
-plot(tz,z(2,:),'LineWidth',1)
-xlabel("time (TU)")
-ylabel("y (LU)")
-subplot(4,1,3)
-plot(tz,z(3,:),'LineWidth',1)
-xlabel("time (TU)")
-ylabel("v_x (LU/TU)")
-subplot(4,1,4)
-plot(tz,z(4,:),'LineWidth',1)
-xlabel("time (TU)")
-ylabel("v_y (LU/TU)")
+% figure(1)
+% subplot(4,1,1)
+% plot(tz,z(1,:),'LineWidth',1)
+% xlabel("time (TU)")
+% ylabel("x (LU)")
+% subplot(4,1,2)
+% plot(tz,z(2,:),'LineWidth',1)
+% xlabel("time (TU)")
+% ylabel("y (LU)")
+% subplot(4,1,3)
+% plot(tz,z(3,:),'LineWidth',1)
+% xlabel("time (TU)")
+% ylabel("v_x (LU/TU)")
+% subplot(4,1,4)
+% plot(tz,z(4,:),'LineWidth',1)
+% xlabel("time (TU)")
+% ylabel("v_y (LU/TU)")
 
 % Plotting MC Trajectories
-n = 200; 
+n = 20; 
 YX = []; YY = []; YVX = []; YVY = []; YY0 = zeros(4,n);
 for i = 1:n
     Y0 = rv.start + sqrt(R)*randn(length(R),1); YY0(:,i) = Y0; tspan = [0 const.T]; 
@@ -133,15 +133,15 @@ for i=round(linspace(1,length(tx),10))
     if(norm)
         figure(2);
         P = Pest{i}; 
-        plot_gaussian_ellipsoid(xest(1:2,i),P(1:2,1:2),3,p);
+        plot_gaussian_ellipsoid(xest(1:2,i),P(1:2,1:2),[3],p);
         figure(3); 
-        plot_gaussian_ellipsoid(xest(3:4,i),P(3:4,3:4),3,p);
+        plot_gaussian_ellipsoid(xest(3:4,i),P(3:4,3:4),[3],p);
     else
         figure(2);
         P = Pest{i}; 
-        plot_gaussian_ellipsoid(xest(1:2,i).*(const.LU),P(1:2,1:2).*(const.LU^2),3,p);
+        plot_gaussian_ellipsoid(xest(1:2,i).*(const.LU),P(1:2,1:2).*(const.LU^2),[3],p);
         figure(3); 
-        plot_gaussian_ellipsoid(xest(3:4,i).*(const.LU/const.TU),P(3:4,3:4).*((const.LU/const.TU)^2),3,p);
+        plot_gaussian_ellipsoid(xest(3:4,i).*(const.LU/const.TU),P(3:4,3:4).*((const.LU/const.TU)^2),[3],p);
     end
     p.display = 0; 
 end 

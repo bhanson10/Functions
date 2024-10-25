@@ -1,4 +1,4 @@
-function [RV_R_barycenter_unitless] = AGI_Qmethod_J2000_rv_to_RotateBaryCenter_rv(rv_jp, rv_I, const)
+function [RV_R_barycenter_unitless] = AGI_Qmethod_J2000_rv_to_RotateBarycenter_rv(rv_jp, rv_I, const)
     % J2000 Sun-centered Inertial frame r and v in column vector
     rv_I = rv_I(:);
     % Take ephemeris of Jupiter position and calculate circular orbit velocity and create DCM
@@ -6,7 +6,7 @@ function [RV_R_barycenter_unitless] = AGI_Qmethod_J2000_rv_to_RotateBaryCenter_r
     r_jp = rv_jp(1:3); %km
     v_jp_ori = rv_jp(4:6); %km
     % r3bp requires circle orbit
-    omega = sqrt(const.primary.mu/ norm(r_jp)^3);
+    omega = sqrt(const.primary_mu/ norm(r_jp)^3);
     hhat = cross(r_jp,v_jp_ori)/norm(cross(r_jp,v_jp_ori)); % direction of out of plane
     omega_vector = omega*hhat;
     v_jp_omega = cross(omega_vector,r_jp); % circular assumption velocity vector
@@ -24,7 +24,7 @@ function [RV_R_barycenter_unitless] = AGI_Qmethod_J2000_rv_to_RotateBaryCenter_r
     R_DCM_I = I_DCM_R';
     % Another way express dxhat dyhat dzhat from AGI page
     % benefit no need to mess with angular velocity and its direction
-    ratio_u = const.secondary.mu / (const.primary.mu+const.secondary.mu);
+    ratio_u = const.secondary_mu / (const.primary_mu+const.secondary_mu);
     dxhat = v_jp/norm(r_jp)-r_jp*(r_jp'*v_jp)/norm(r_jp)^3;
     dyhat = cross(cross(r_jp,v_jp),v_jp)/(norm(r_jp)*norm(cross(r_jp,v_jp))) -...
     (cross(r_jp,v_jp)/(norm(r_jp)^3*norm(cross(r_jp,v_jp))))'*(cross(cross(r_jp,v_jp),r_jp));
@@ -43,7 +43,7 @@ function [RV_R_barycenter_unitless] = AGI_Qmethod_J2000_rv_to_RotateBaryCenter_r
     V_R_barycenter = RV_R_barycenter(4:6);
     % rotating frame with unit to rotating frame unitless
     lstar = norm(rv_jp(1:3)); % characteristic length
-    mustar = const.primary.mu+const.secondary.mu; % G*(characteristic u)
+    mustar = const.primary_mu+const.secondary_mu; % G*(characteristic u)
     tstar = sqrt(lstar^3/mustar);
     R_R_barycenter_unitless = R_R_barycenter / lstar;
     V_R_barycenter_unitless = V_R_barycenter * tstar/lstar;

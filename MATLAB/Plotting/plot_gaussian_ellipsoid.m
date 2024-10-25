@@ -96,6 +96,8 @@ end
 if ~(isscalar(p.axh) && ishandle(p.axh) && strcmp(get(p.axh,'type'), 'axes'))
     error('Invalid axes handle');
 end
+p.alpha = sort(p.alpha, 'descend'); 
+sd = sort(sd); 
 
 set(p.axh, 'nextplot', 'add');
 

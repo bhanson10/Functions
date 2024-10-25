@@ -218,6 +218,8 @@ for i=1:nz
         K = P_xz*(S^(-1));
         xest(:,end) = xest(:,end) + K*(zk1-zpred);
         Pest{end}   = Pest{end} - K*S*K';
+
+        
     end
 end
 end

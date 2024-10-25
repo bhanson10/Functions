@@ -2,9 +2,11 @@ function [rv_I] = AGI_Qmethod_Inverse_RotateBarycenter_rv_to_J2000_rv(rv_jp, RV_
 % convert state from inertial frame to rotating frame
 %   Input:
 %             rv_jp: the secondary's position and velocity vector in inertial frame
-%             oe: target body's orbita element (a,e,i,Omega,omega) in degree and km
-%             const: includes const.primary.mu (the primary gravitational constant), 
-%                    const.secondary.mu (the secondary gravitational constant)
+%             RV_R_barycenter_unitless: position and velocity vector defined by the 
+%             rotating frame of the primary and the secondary with unit length being 
+%             the distance between the seondary and the primary
+%             const: includes const.primary_mu (the primary gravitational constant), 
+%                    const.secondary_mu (the secondary gravitational constant)
 %     Output:
 %             RV_R_barycenter_unitless: position and velocity vector defined by the 
 %             rotating frame of the primary and the secondary with unit length being 
@@ -13,7 +15,7 @@ function [rv_I] = AGI_Qmethod_Inverse_RotateBarycenter_rv_to_J2000_rv(rv_jp, RV_
 
 % rotating frame unitless to rotating frame with unit
 lstar = norm(rv_jp(1:3)); % characteristic length
-mustar = const.primary.mu+const.secondary.mu; % G*(characteristic u)
+mustar = const.primary_mu+const.secondary_mu; % G*(characteristic u)
 tstar = sqrt(lstar^3/mustar);
 R_R_barycenter_unitless = RV_R_barycenter_unitless(1:3); % unitless R in rotating barycenter
 V_R_barycenter_unitless = RV_R_barycenter_unitless(4:6); % unitless V in rotating barycenter
@@ -26,7 +28,7 @@ r_jp = rv_jp(1:3); %km
 v_jp_ori = rv_jp(4:6); %km
 
 % r3bp requires circle orbit
-omega = sqrt(const.primary.mu/ norm(r_jp)^3);
+omega = sqrt(const.primary_mu/ norm(r_jp)^3);
 hhat = cross(r_jp,v_jp_ori)/norm(cross(r_jp,v_jp_ori)); % direction of out of plane
 omega_vector = omega*hhat;
 v_jp_omega = cross(omega_vector,r_jp); % circular assumption velocity vector
@@ -48,7 +50,7 @@ R_DCM_I = I_DCM_R';
 
 % Another way express dxhat dyhat dzhat from AGI page
 % benefit no need to mess with angular velocity and its direction
-ratio_u = const.secondary.mu / (const.primary.mu+const.secondary.mu);
+ratio_u = const.secondary_mu / (const.primary_mu+const.secondary_mu);
 dxhat = v_jp/norm(r_jp)-r_jp*(r_jp'*v_jp)/norm(r_jp)^3;
 dyhat = cross(cross(r_jp,v_jp),v_jp)/(norm(r_jp)*norm(cross(r_jp,v_jp))) -...
     (cross(r_jp,v_jp)/(norm(r_jp)^3*norm(cross(r_jp,v_jp))))'*(cross(cross(r_jp,v_jp),r_jp));
